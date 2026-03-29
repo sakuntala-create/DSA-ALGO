@@ -1,0 +1,95 @@
+//Number of Islands (grid DFS/BFS) 
+// problem statement :
+//You are given a 2D grid of '1' (land) and '0' (water).
+
+//👉 Return the number of islands.
+
+//🌴 What is an island?
+//A group of connected '1's
+//Connected horizontally or vertically (NOT diagonally)
+
+
+func numIslands(grid [][]int) int{
+	rows, cols := len(grid), len(grid[0])
+	count := 0
+	maxArea :=0
+
+	var dfs func(r, c int)
+	dfs = func(r, c int) {
+		if r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] == 0{
+			return
+		}
+		grid[r][c] = 0 // Mark as visited
+		area := 1
+	    area+=dfs(r-1, c)
+		area+=dfs(r+1, c)
+		area+=dfs(r, c-1)
+		area+=dfs(r, c+1)
+
+		return area
+	}
+
+	for r:= 0; r < rows; r++ {
+		for c := 0; c < cols; c++ {
+			if grid[r][c] == 1{
+				area := dfs(r,c)
+				if area > maxArea {
+					maxArea = area
+				}
+			}
+		}
+	}
+
+	return maxArea
+
+}
+
+//complexity :
+//Time : O(M*N)
+//Spae : O(M*N)
+
+// BFS Approach :
+
+func maxAreaOfIsland(grid [][]int) int {
+	rows, cols := len(grid), len(grid[0])
+	maxArea := 0
+
+	directions := [][]int{{-1,0},{1,0},{0,-1},{0,1}}
+
+	for r:=0;r<rows;r++{
+		for c:=0;c<cols;c++{
+			if grid[r][c]==1{
+				queue := [][]int{{r,c}}
+				grid[r][c] = 0 // Mark as visited
+				area := 0
+
+				for len(queue) > 0 {
+					cell := queue[0]
+					queue = queue[1:]
+					area++
+                    x,y := cell[0], cell[1]
+
+					for _, dir := range directions{
+						nx, ny := x+dir[0], y+dir[1]
+						if nx >= 0 && nx < rows && ny >= 0 && ny < cols && grid[nx][ny] == 1{
+							queue = append(queue, []int{nx, ny})
+							grid[nx][ny] = 0 // Mark as visited
+						}
+					}
+				}
+
+				if area > maxArea {
+					maxArea = area
+				}
+			}
+		}
+	}
+
+	return maxArea
+}
+
+//complexity :
+//Time : O(M*N)
+//Spae : O(M*N)
+
+
