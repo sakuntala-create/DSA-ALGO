@@ -1,0 +1,59 @@
+
+func findPath(n int, edges [][]int, start int, end int) bool{
+
+	parent := make([]int, n)
+	for i := 0; i < n; i++ {
+		parent[i] = i
+	}
+
+	var find func(int) int
+	find = func(x int) int {
+		if parent[x] != x {
+			parent[x] = find(parent[x])
+		}
+		return parent[x]
+	}
+
+	union := func(x, y int) {
+		rootX := find(x)
+		rootY := find(y)
+		if rootX != rootY {
+			parent[rootX] = rootY
+		}
+	}
+
+	for _, edge := range edges {
+		union(edge[0], edge[1])
+	}
+
+	return find(start) == find(end)
+}
+
+func validPth(n int, edges [][]int , source int , destination int) bool{
+
+	graph := make(map[][]int)
+	for _, edge := range edges {
+		graph[edge[0]] = append(graph[edge[0]], edge[1])
+		graph[edge[1]] = append(graph[edge[1]], edge[0])
+	}
+
+	visited := make([]bool, n)
+
+	var dfs func(int) bool
+	dfs = func(node int) bool {
+		if node == destination {
+			return true
+		}
+		visited[node] = true
+		for _, neighbor := range graph[node] {
+			if !visited[neighbor] {
+				if dfs(neighbor) {
+					return true
+				}
+			}
+		}
+		return false
+	}
+
+	return dfs(source)
+}
