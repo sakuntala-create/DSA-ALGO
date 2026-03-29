@@ -1,0 +1,40 @@
+// //Minimum Number of Vertices to Reach All Nodes
+
+// //This is a very smart observation problem — no DFS/BFS needed if you see the trick 👇
+
+// //You’re given:
+
+// //n nodes (0 → n-1)
+// //Directed edges edges[i] = [u, v] (u → v)
+
+// //👉 Return the smallest set of vertices from which all nodes are reachable.
+
+// 👉 Nodes with NO incoming edges (indegree = 0)
+
+// Why?
+
+// These nodes cannot be reached from anywhere else
+// So you must include them
+
+// If you include any other node, it will be redundant because it can be reached from the nodes with no incoming edges
+// Graph is directed
+// you can only move in the given direction
+// you want the minimum number of starting points
+
+func findSmallestSetOfVertices(n int, edges [][]int) []int {
+	indegree := make([]int, n)
+
+	for _, edge := range edges {
+		to := edge[1]
+		indegree[to]++
+	}
+
+	result := []int{}
+	for i := 0; i < n; i++ {
+		if indegree[i] == 0 {
+			result = append(result, i)
+		}
+	}
+
+	return result
+}
