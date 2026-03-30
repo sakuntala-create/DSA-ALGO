@@ -1,0 +1,36 @@
+//Count Connected Components (Graph)
+
+//You are given:
+
+//n nodes (0 to n-1)
+//A list of edges
+
+func countComponents(n int, edges [][]int) int {
+	graph := make(map[int][]int)
+
+	for _, edge := range edges {
+		u, v := edge[0], edge[1]
+		graph[u] = append(graph[u], v)
+		graph[v] = append(graph[v], u) 
+	}
+	visited := make(map[int]bool)
+	count := 0
+
+	var dfs func(node int)
+	dfs = func (node int) {
+		visited[node] = true
+		for _, neighbor := range graph[node] {
+			if !visited[neighbor] {
+				dfs(neighbor)
+			}
+		}
+	}
+
+	for i:= 0; i < n; i++ {
+		if !visited[i] {
+			count++
+			dfs(i)
+		}
+	}
+	return count
+}
