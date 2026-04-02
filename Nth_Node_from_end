@@ -1,0 +1,25 @@
+
+type ListNode struct{
+	Val int
+	Next *ListNode
+}
+
+//Nth node from end of linked list
+
+func nthFromEnd(head *ListNode, n int) int {
+	if head == nil {
+		return -1
+	}
+	slow, fast := head, head
+	for i := 0; i < n; i++ {
+		if fast == nil {
+			return -1
+		}
+		fast = fast.Next
+	}
+	for fast != nil {
+		slow = slow.Next
+		fast = fast.Next
+	}
+	return slow.Val
+}
