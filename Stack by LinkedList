@@ -1,0 +1,45 @@
+package main
+
+import "fmt"
+
+type Node struct {
+	value int
+	next *Node
+}
+
+type Stack struct {
+	top *Node
+}
+
+// Push adds an element to the top of the stack
+
+func (s *Stack) Push(value int) {
+	newNode := &Node{value: value}
+	newNode.next = s.top
+	s.top = newNode
+}
+
+func (s *Stack) Pop() (int, error) {
+	if s.top == nil {
+		return 0, fmt.Errorf("stack is empty")
+	}
+	value := s.top.value
+	s.top = s.top.next
+	return value, nil
+}
+
+func (s *Stack) Peek() (int, error) {
+	if s.top == nil {
+		return 0, fmt.Errorf("stack is empty")
+	}
+	return s.top.value, nil
+}
+
+func (s *Stack) Print(){
+	current := s.top
+	for current != nil {
+		fmt.Printf("%d ", current.value)
+		current = current.next
+	}
+	fmt.Println("NIL")
+}
