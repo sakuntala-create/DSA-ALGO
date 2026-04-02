@@ -1,0 +1,36 @@
+
+type ListNode struct{
+	Val int
+	Next *ListNode
+}
+
+func rotateRight(head *ListNode , k int) *ListNode {
+	if head == nil || head.Next==nil || k==0{
+		return head
+	}
+
+	// step 1 : find length
+	length := 1
+	tail := head
+	for tail.Next != nil{
+		tail = tail.Next
+		length++
+	}
+	// step 2 : Make it circular
+	tail.Next = head
+
+	// step 3 : find new tail and new head
+	k = k%length
+	stepsToNewTail := length - k-1
+	newTail := head
+	for i:=0; i<stepsToNewTail; i++{
+		newTail = newTail.Next
+	}
+
+	newHead := newTail.Next
+
+	// step 4 : break the circle
+	newTail.Next = nil
+
+	return newHead
+}
