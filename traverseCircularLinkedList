@@ -1,0 +1,24 @@
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+// traverseCircular
+
+func traverseCircular(head *ListNode) {
+	if head == nil {
+		return
+	}
+	current := head
+	for {
+		// Process current node
+		println(current.Val)
+		current = current.Next
+		if current == head {
+			break
+		}
+	}
+
+	fmt.Println("Finished traversing circular linked list.")
+}
