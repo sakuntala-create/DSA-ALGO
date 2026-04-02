@@ -1,0 +1,37 @@
+
+type ListNode struct{
+	Val int
+	Next *ListNode
+}
+
+//Nth node from end of linked list
+
+func deleteLastOccurrence(head *ListNode, key int) *ListNode {
+	if head == nil {
+		return nil
+	}
+	var lastOcc, prevLast, prev *ListNode
+
+	curr := head
+	// step 1: Traverse and track the last occurrence
+	for curr != nil {
+		if curr.Val == key {
+			lastOcc = curr
+			prevLast = prev
+		}
+		prev = curr
+		curr = curr.Next
+	}
+
+	if lastOcc == nil {
+		return head // key not found, return original list
+	}
+
+	// step 2: Delete the last occurrence
+	if prevLast == nil {
+		// last occurrence is the head
+		return head.Next
+	}
+	prevLast.Next = lastOcc.Next
+	return head
+}
