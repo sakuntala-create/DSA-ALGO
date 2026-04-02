@@ -1,0 +1,61 @@
+package main
+
+import "fmt"
+
+type Node struct {
+	value int
+	next *Node
+}
+
+type Queue struct {
+	head *Node
+	tail *Node
+}
+
+// Enqueue adds an element to the end of the queue
+func (q *Queue) Enqueue(value int) {
+	newNode := &Node{value: value}
+ if q.tail == nil{
+	q.head = newNode
+	q.tail = newNode
+	return
+ }
+ q.tail.next = newNode
+ q.tail = newNode
+}
+
+// Dequeue removes an element from the front of the queue and returns its value
+func (q *Queue) Dequeue() (int, error) {
+	if q.head == nil {
+		return 0, fmt.Errorf("queue is empty")
+	}
+	value := q.head.value
+	q.head = q.head.next
+
+	if q.head == nil {
+		q.tail = nil
+	}
+	return value, nil
+}
+	
+// peek : get front element
+
+func (q *Queue) Peek() (int, error) {
+	if q.head == nil {
+		return 0, fmt.Errorf("queue is empty")
+	}
+	return q.head.value, nil
+}
+
+func (q *Queue) IsEmpty() bool {
+	return q.head == nil
+}
+
+func (q *Queue) Print(){
+	current := q.head
+	for current != nil {
+		fmt.Printf("%d ", current.value)
+		current = current.next
+	}
+	fmt.Println()
+}
