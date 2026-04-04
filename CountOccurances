@@ -1,0 +1,17 @@
+// LINKED-LIST SWAP in k grps
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func countOccurences(head *ListNode, target int) int {
+	count := 0
+	curr := head
+	for curr != nil {
+		if curr.Val == target {
+			count++
+		}
+		curr = curr.Next
+	}
+	return count
+}
