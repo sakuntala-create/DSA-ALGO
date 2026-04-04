@@ -1,0 +1,40 @@
+// LINKED-LIST SWAP in k grps
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func swapKGroups(head *ListNode, k int)*ListNode{
+	if head == nil || k <= 1 {
+		return head
+	}
+	dummy := &ListNode{Next:head}
+	prevGroupEnd := dummy
+	for {
+		// Check if there are at least k nodes left
+		kthNode := prevGroupEnd
+		for i := 0; i < k && kthNode != nil; i++ {
+
+			kthNode = kthNode.Next
+		}
+		if kthNode == nil {
+			break
+		}
+		groupStart := prevGroupEnd.Next
+		nextGroupStart := kthNode.Next
+		// Reverse the current group
+		prev, curr := nextGroupStart, groupStart
+		for curr != nextGroupStart {
+			next := curr.Next
+			curr.Next = prev
+			prev = curr
+			curr = next
+		}
+		// Connect the previous group to the current group
+		prevGroupEnd.Next = kthNode
+		prevGroupEnd = groupStart	
+		
+	}
+	return dummy.Next
+
+}
