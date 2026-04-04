@@ -1,0 +1,31 @@
+// LINKED-LIST SWAP in k grps
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func detectCycleLength(head *ListNode) int {
+	if head == nil {
+		return 0
+	}
+	slow, fast := head, head
+	count := 0
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+		if slow == fast {
+
+			// count the length of the cycle
+			current := slow
+			for {
+				count++
+				current = current.Next
+				if current == slow {
+					break
+				}
+			}
+			return count
+		}
+	}
+	return count
+}
