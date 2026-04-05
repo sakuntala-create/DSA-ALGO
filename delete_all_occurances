@@ -1,0 +1,20 @@
+// remove all occurences of a given value from the linked list
+
+type Node struct {
+	Val  int
+	Next *Node
+}
+
+func removeElements(head *Node, val int) *Node {
+	dummy := &Node{Next: head}
+	prev, curr := dummy, head
+	for cur != nil {
+		if curr.Val == val {
+			prev.Next = curr.Next
+		} else {
+			prev = curr
+		}
+		curr = curr.Next
+	}
+	return dummy.Next
+}
