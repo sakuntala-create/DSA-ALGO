@@ -1,0 +1,29 @@
+// LINKED-LIST SWAP in k grps
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func getIntersetionNode(headA, headB *ListNode) *ListNode {
+	if headA == nil || headB == nil {
+		return nil
+	}
+
+	p1, p2 := headA, headB
+
+	for p1 != p2 {
+		if p1==nil{
+			pi=headB
+		}else{
+			p1=p1.Next
+		}
+
+		if p2==nil{
+			p2=headA
+		}else{
+			p2=p2.Next
+		}
+	}
+
+	return p1
+}
