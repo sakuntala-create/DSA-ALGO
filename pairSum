@@ -1,0 +1,39 @@
+// pair sum in doubly linked list 
+
+type Node struct {
+	data int
+	next *Node
+	prev *Node
+}
+
+func pairSum(head *Node, target int) [][]int{
+
+	var result [][]int
+
+	if head == nil {
+		return result
+	}
+	// Find the tail of the list
+	tail := head
+	for tail.next != nil {
+		tail = tail.next
+	}
+	// Use two pointers to find the pair
+	left := head
+	right := tail
+
+	for left != right && left.prev != right {
+		sum := left.data + right.data
+		if sum == target {
+			result = append(result , []int{left.data, right.data})
+			left = left.next
+			right = right.prev
+		} else if sum < target {
+			left = left.next
+		} else {
+			right = right.prev
+		}
+	}
+
+	return result
+}	
