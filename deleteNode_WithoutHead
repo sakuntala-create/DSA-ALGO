@@ -1,0 +1,14 @@
+// LINKED-LIST SWAP in k grps
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func deleteWithoutHead(node *ListNode) {
+if node == nil || node.Next == nil {
+		return
+	}
+
+	node.Val= node.Next.Val
+	node.Next = node.Next.Next
+}
