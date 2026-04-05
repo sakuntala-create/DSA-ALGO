@@ -1,0 +1,28 @@
+// remove all occurences of a given value from the linked list
+
+type Node struct {
+	Val  int
+	Next *Node
+}
+
+func splitCircularList(head *Node) (*Node, *Node) {
+	if head == nil || head.Next == head {
+		return head, nil
+	}
+	slow, fast := head, head
+	for fast.Next != head && fast.Next.Next != head{
+		slow= slow.Next
+		fast = fast.Next.Next
+	}
+
+	if fast.Next.Next == head {
+		fast = fast.Next
+	}
+
+	head1:= head
+	head2 := slow.Next
+	slow.Next = head1
+	fast.Next = head2
+
+	return head1, head2
+}
