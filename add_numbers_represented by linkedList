@@ -1,0 +1,25 @@
+type Node struct {
+	value int
+	next  *Node
+}
+
+func addTwoNumbers(l1 *Node, l2 *Node) *Node {
+	dummyHead := &Node{0, nil}
+	current := dummyHead
+	carry := 0
+	for l1 != nil || l2 != nil || carry != 0 {
+		sum := carry
+		if l1 != nil {
+			sum += l1.value
+			l1 = l1.next
+		}
+		if l2 != nil {
+			sum += l2.value
+			l2 = l2.next
+		}
+		carry = sum / 10
+		current.next = &Node{sum % 10, nil}
+		current = current.next
+	}
+	return dummyHead.next
+}
