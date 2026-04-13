@@ -1,0 +1,34 @@
+package main
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+// Delete M nodes after N nodes of a linked list
+func deleteNodes(head *ListNode, m int, n int) *ListNode {
+	if head == nil {
+		return nil
+	}
+	current := head
+	for current != nil {
+		// Skip M nodes
+		for i := 1; i < n && current != nil; i++ {
+			current = current.Next
+		}
+		if current == nil {
+			break
+		}		
+
+		// Delete N nodes
+		toDelete := current.Next
+		for i := 0; i < m && toDelete != nil; i++ {
+			toDelete = toDelete.Next
+		}
+		current.Next = toDelete
+		current = toDelete
+	}
+	return head
+}
+
+
