@@ -1,0 +1,37 @@
+// Add two numbers represented by two linkedlist
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	var head *ListNode
+	var tail *ListNode
+	carry := 0
+	for l1 != nil || l2 != nil {
+		var x, y int
+		if l1 != nil {
+			x = l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			y = l2.Val
+			l2 = l2.Next
+		}
+		sum := x + y + carry
+		carry = sum / 10
+		newNode := &ListNode{Val: sum % 10}
+		if head == nil {
+			head = newNode
+			tail = newNode
+		}else{
+		tail.Next = newNode
+		tail = tail.Next
+		}
+	}
+	if carry > 0 {
+		tail.Next = &ListNode{Val: carry}
+	}
+	return head
+}
