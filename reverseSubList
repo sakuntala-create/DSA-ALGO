@@ -1,0 +1,38 @@
+package main
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+// reverse a sublist of a linked list from position left to position right, and return the head of the modified linked list
+
+func reverseBetween(head *ListNode, left int, right int) *ListNode {
+	if head == nil || left== right {
+		return head
+	} 
+
+	dummy := &ListNode{Next: head}
+	prev := dummy
+	for i := 1; i < left; i++ {
+		prev = prev.Next
+	}
+
+	tail1 := prev
+	tail2 := prev.Next
+
+	prev1 := tail2
+	current := tail2.Next
+	for i:=left;i<right && current != nil;i++ {
+        next:=  current.Next
+		current.Next = prev1
+		prev1 = current
+		current = next    
+	}
+
+	tail1.Next = prev1
+	tail2.Next = current
+
+	return dummy.Next
+	
+}
+
