@@ -1,0 +1,58 @@
+package main
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func main() {
+	// Creating nodes
+	head := &ListNode{Val: 1}
+	head.Next = &ListNode{Val: 2}
+	head.Next.Next = &ListNode{Val: 3}
+	head.Next.Next.Next = &ListNode{Val: 4}
+	head.Next.Next.Next.Next = &ListNode{Val: 5}
+	head.Next.Next.Next.Next.Next = &ListNode{Val: 6}
+
+	// reaarrange the linked list
+	rearrange(head)
+	// Print the rearranged linked list
+	curr := head
+	for curr != nil {
+		print(curr.Val, " ")
+		curr = curr.Next
+	}
+}
+
+// rearrange the linked list.
+func rearrange(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	// Step 1: Find the middle of the linked list using the slow and fast pointer technique.
+	slow, fast := head, head
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	// Step 2: Reverse the second half of the linked list.
+	var prev *ListNode
+	curr := slow
+	for curr != nil {
+		next := curr.Next
+		curr.Next = prev
+		prev = curr
+		curr = next
+	}
+	// Step 3: Merge the two halves of the linked list.
+	first, second := head, prev
+	for second.Next != nil {
+		firstNext := first.Next
+		secondNext := second.Next
+		first.Next = second
+		second.Next = firstNext
+		first = firstNext
+		second = secondNext
+	}
+	return head
+}
